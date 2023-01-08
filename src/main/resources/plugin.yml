@@ -1,0 +1,10 @@
+name: Warp
+main: io.github.idknicks.warp.Plugin
+author: idkNicks
+
+version: 1.0.0
+api-version: 1.13
+
+commands:
+  warp:
+    aliases: [ 워프 ]
