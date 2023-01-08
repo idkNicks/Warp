@@ -19,5 +19,6 @@ class Plugin : JavaPlugin() {
         getCommand("warp")?.setExecutor(WarpCmd())
 
         /** CONFIG */
+        saveConfig()
     }
 }
