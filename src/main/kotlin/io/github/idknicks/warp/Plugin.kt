@@ -1,5 +1,6 @@
 package io.github.idknicks.warp
 
+import com.github.nicklib.bstats.Metrics
 import io.github.idknicks.warp.command.SetSpawnCmd
 import io.github.idknicks.warp.command.SpawnCmd
 import io.github.idknicks.warp.command.WarpCmd
@@ -12,11 +13,9 @@ class Plugin : JavaPlugin() {
         var plugin: JavaPlugin? = null
     }
 
-
     override fun onEnable() {
         init()
     }
-
 
     /** 모듈을 관리합니다. */
     private fun init() {
@@ -30,5 +29,8 @@ class Plugin : JavaPlugin() {
         /** CONFIG */
         plugin = this
         saveConfig()
+
+        /** BSTATS */
+        Metrics(this, 12345)
     }
 }
