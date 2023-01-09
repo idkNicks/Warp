@@ -10,3 +10,7 @@ softdepend: [ NickLib ]
 commands:
   warp:
     aliases: [ 워프 ]
+  spawn:
+    aliases: [ 스폰 ]
+  setspawn:
+    aliases: [ 스폰설정 ]

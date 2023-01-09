@@ -42,9 +42,41 @@ class WarpData(player: Player) {
     }
 
 
+    /**
+     * 워프 위치를 가져옵니다.
+     * @param name 워프의 이름
+     */
     fun getWarpLocation(name: String): Location? {
         var config: Config = Config("warp/" + name, plugin)
         return config.getLocation(name)
+    }
+
+
+    /**
+     * 스폰을 설정합니다.
+     */
+    fun setSpawnLocation() {
+        var config: Config = Config("spawn", plugin)
+        config.saveLocation("spawn", player.location)
+    }
+
+
+    /**
+     * 스폰 위치를 가져옵니다.
+     */
+    fun getSpawnLocation(): Location? {
+        var config: Config = Config("spawn", plugin)
+        return config.getLocation("spawn")
+    }
+
+
+    /**
+     * 스폰이 존재하는지 확인합니다.
+     * @return 스폰이 존재하면 true, 아니면 false
+     */
+    fun isSpawnExist(): Boolean {
+        var config: Config = Config("spawn", plugin)
+        return config.isFileExist
     }
 
 

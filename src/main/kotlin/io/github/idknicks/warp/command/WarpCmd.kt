@@ -25,13 +25,13 @@ class WarpCmd : CommandExecutor {
 
                 "이동", "teleport" -> {
                     var name: String = args[1]
-                    
-                    if(!player.hasPermission("warp.teleport")) {
+
+                    if (!player.hasPermission("warp.teleport")) {
                         player.sendMessage("§c당신은 이 명령어를 사용할 §c당신은 이 명령어를 사용할 권한이 없습니다.")
                         return true
                     }
 
-                    if(!warpData.isWarpExist(name)) {
+                    if (!warpData.isWarpExist(name)) {
                         player.sendMessage("워프가 존재하지 않습니다.")
                         return true
                     }
@@ -44,17 +44,17 @@ class WarpCmd : CommandExecutor {
                     var target: Player = player.server.getPlayer(args[1])!!
                     var name: String = args[2]
 
-                    if(!player.hasPermission("warp.forcedteleport")) {
+                    if (!player.hasPermission("warp.forcedteleport")) {
                         player.sendMessage("§c당신은 이 명령어를 사용할 §c당신은 이 명령어를 사용할 권한이 없습니다.")
                         return true
                     }
 
-                    if(!warpData.isWarpExist(name)) {
+                    if (!warpData.isWarpExist(name)) {
                         player.sendMessage("워프가 존재하지 않습니다.")
                         return true
                     }
 
-                    if(target == null) {
+                    if (target == null) {
                         player.sendMessage("§c플레이어가 온라인이 아닙니다.")
                         return true
                     }
@@ -82,7 +82,7 @@ class WarpCmd : CommandExecutor {
                         player.sendMessage("이미 존재하는 워프입니다!")
                         return true;
                     }
-                    
+
                     warpData.createWarp(name)
                     player.sendMessage("${name}의 워프를 생성하였습니다!")
                     return true;
@@ -91,7 +91,7 @@ class WarpCmd : CommandExecutor {
                 "제거", "삭제", "delete" -> {
 
                     var name: String = args[1]
-                    
+
                     if (!player.hasPermission("warp.delete")) {
                         player.sendMessage("§c당신은 이 명령어를 사용할 권한이 없습니다.")
                         return true;
