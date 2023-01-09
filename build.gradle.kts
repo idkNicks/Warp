@@ -1,4 +1,3 @@
-import com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar
 
 plugins {
     kotlin("jvm") version "1.7.21"
@@ -19,7 +18,7 @@ repositories {
 dependencies {
 
     /** CORE */
-    compileOnly("com.github:nicklib:1.1.7")
+    compileOnly("com.github:nicklib:1.4.8")
 
     /** BUKKIT API */
     compileOnly("org.bukkit.spigotmc:spigot-api:1.19.2-R0.1")

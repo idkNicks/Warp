@@ -5,6 +5,8 @@ author: idkNicks
 version: 1.0.0
 api-version: 1.13
 
+softdepend: [ NickLib ]
+
 commands:
   warp:
     aliases: [ 워프 ]

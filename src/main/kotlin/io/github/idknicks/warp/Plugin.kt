@@ -5,8 +5,14 @@ import org.bukkit.plugin.java.JavaPlugin
 
 class Plugin : JavaPlugin() {
 
+    companion object {
+        var plugin: JavaPlugin? = null
+    }
+
+
 
     override fun onEnable() {
+        plugin = this
         init()
     }
 
