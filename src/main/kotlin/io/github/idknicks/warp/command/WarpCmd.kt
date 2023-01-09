@@ -41,8 +41,8 @@ class WarpCmd : CommandExecutor {
                 }
 
                 "강제이동" -> {
-                    var name: String = args[1]
-                    var target: Player = player.server.getPlayer(args[2])!!
+                    var target: Player = player.server.getPlayer(args[1])!!
+                    var name: String = args[2]
 
                     if(!player.hasPermission("warp.forcedteleport")) {
                         player.sendMessage("§c당신은 이 명령어를 사용할 §c당신은 이 명령어를 사용할 권한이 없습니다.")
@@ -51,6 +51,11 @@ class WarpCmd : CommandExecutor {
 
                     if(!warpData.isWarpExist(name)) {
                         player.sendMessage("워프가 존재하지 않습니다.")
+                        return true
+                    }
+
+                    if(target == null) {
+                        player.sendMessage("§c플레이어가 온라인이 아닙니다.")
                         return true
                     }
 

@@ -1,6 +1,7 @@
 package io.github.idknicks.warp
 
 import io.github.idknicks.warp.command.WarpCmd
+import io.github.idknicks.warp.command.WarpTabComplete
 import org.bukkit.plugin.java.JavaPlugin
 
 class Plugin : JavaPlugin() {
@@ -23,6 +24,7 @@ class Plugin : JavaPlugin() {
 
         /** COMMAND */
         getCommand("warp")?.setExecutor(WarpCmd())
+        getCommand("warp")?.tabCompleter = WarpTabComplete()
 
         /** CONFIG */
         saveConfig()
