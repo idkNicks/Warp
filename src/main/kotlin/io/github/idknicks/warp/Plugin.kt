@@ -1,12 +1,10 @@
 package io.github.idknicks.warp
 
-import com.github.nicklib.bstats.Metrics
 import com.github.nicklib.data.Config
 import io.github.idknicks.warp.command.SetSpawnCmd
 import io.github.idknicks.warp.command.SpawnCmd
 import io.github.idknicks.warp.command.WarpCmd
 import io.github.idknicks.warp.command.WarpTabComplete
-import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 
 class Plugin : JavaPlugin() {
