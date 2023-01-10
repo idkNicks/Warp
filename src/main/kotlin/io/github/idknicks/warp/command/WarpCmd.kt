@@ -157,17 +157,16 @@ class WarpCmd : CommandExecutor {
                 }
 
 
-                "리로드", "reload" -> {
-
-                    if(!player.hasPermission("warp.reload")) {
-                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
-                        return true;
-                    }
-
-                    config!!.reloadConfig()
-                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.warp.reloadConfig"))))
-                    return true;
-                }
+//                "리로드", "reload" -> {
+//
+//                    if(!player.hasPermission("warp.reload")) {
+//                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
+//                        return true;
+//                    }
+//
+//                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.warp.reloadConfig"))))
+//                    return true;
+//                }
 
                 else -> {
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.notExistCommand"))))
