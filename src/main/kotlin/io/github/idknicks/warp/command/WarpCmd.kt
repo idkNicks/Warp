@@ -164,6 +164,7 @@ class WarpCmd : CommandExecutor {
                         return true;
                     }
 
+                    config = Config("config", instance)
                     config!!.reloadConfig()
                     player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.warp.reloadConfig"))))
                     return true;
