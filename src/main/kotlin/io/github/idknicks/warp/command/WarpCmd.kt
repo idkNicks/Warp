@@ -1,6 +1,7 @@
 package io.github.idknicks.warp.command
 
 import io.github.idknicks.warp.data.WarpData
+import org.bukkit.Bukkit
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -24,40 +25,56 @@ class WarpCmd : CommandExecutor {
             when (args[0]) {
 
                 "이동", "teleport" -> {
-                    var name: String = args[1]
 
                     if (!player.hasPermission("warp.teleport")) {
                         player.sendMessage("§c당신은 이 명령어를 사용할 §c당신은 이 명령어를 사용할 권한이 없습니다.")
                         return true
                     }
 
-                    if (!warpData.isWarpExist(name)) {
+                    if (args.size == 1) {
+                        player.sendMessage("이동하실 워프 이름을 입력해주세요!")
+                        return true;
+                    }
+
+                    if (!warpData.isWarpExist(args[1])) {
                         player.sendMessage("워프가 존재하지 않습니다.")
                         return true
                     }
 
+                    var name: String = args[1]
                     warpData.getWarpLocation(name)?.let { player.teleport(it) }
                     player.sendMessage("워프 $name 으로 이동했습니다.")
                 }
 
                 "강제이동" -> {
-                    var target: Player = player.server.getPlayer(args[1])!!
-                    var name: String = args[2]
 
                     if (!player.hasPermission("warp.forcedteleport")) {
                         player.sendMessage("§c당신은 이 명령어를 사용할 §c당신은 이 명령어를 사용할 권한이 없습니다.")
                         return true
                     }
 
-                    if (!warpData.isWarpExist(name)) {
+                    if (args.size == 1) {
+                        player.sendMessage("강제 이동시킬 플레이어의 닉네임을 입력해주세요!")
+                        return true;
+                    }
+
+                    if(args.size == 2) {
+                        player.sendMessage("강제 이동시킬 워프 이름을 입력해주세요!")
+                        return true;
+                    }
+
+                    if (!warpData.isWarpExist(args[2])) {
                         player.sendMessage("워프가 존재하지 않습니다.")
                         return true
                     }
 
-                    if (target == null) {
-                        player.sendMessage("§c플레이어가 온라인이 아닙니다.")
+                    if(Bukkit.getPlayer(args[1]) == null) {
+                        player.sendMessage("플레이어가 온라인이 아닙니다.")
                         return true
                     }
+
+                    var target: Player = player.server.getPlayer(args[1])!!
+                    var name: String = args[2]
 
                     warpData.getWarpLocation(name)?.let { target.teleport(it) }
                     player.sendMessage("워프 $name 으로 ${target.name} 님을 이동했습니다.")
@@ -65,8 +82,6 @@ class WarpCmd : CommandExecutor {
 
 
                 "생성", "create" -> {
-
-                    var name: String = args[1]
 
                     if (!player.hasPermission("warp.create")) {
                         player.sendMessage("§c당신은 이 명령어를 사용할 권한이 없습니다.")
@@ -78,11 +93,12 @@ class WarpCmd : CommandExecutor {
                         return true;
                     }
 
-                    if (warpData.isWarpExist(name)) {
+                    if (warpData.isWarpExist(args[1])) {
                         player.sendMessage("이미 존재하는 워프입니다!")
                         return true;
                     }
 
+                    var name: String = args[1]
                     warpData.createWarp(name)
                     player.sendMessage("${name}의 워프를 생성하였습니다!")
                     return true;
