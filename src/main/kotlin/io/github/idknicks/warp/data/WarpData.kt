@@ -5,10 +5,7 @@ import io.github.idknicks.warp.Plugin.Companion.instance
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
-class WarpData(player: Player) {
-
-
-    var player: Player = player
+class WarpData(private var player: Player) {
 
 
     /**
