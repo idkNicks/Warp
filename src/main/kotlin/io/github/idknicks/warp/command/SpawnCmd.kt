@@ -13,7 +13,8 @@ class SpawnCmd: CommandExecutor {
         var player: Player = sender as Player
         var warpData: WarpData = WarpData(player)
 
-        if(sender is Player) {
+        if(!(sender is Player)) {
+        }
 
             if(args.isEmpty()) {
 
@@ -29,7 +30,7 @@ class SpawnCmd: CommandExecutor {
 
                 warpData.getSpawnLocation()?.let { player.teleport(it) }
                 sender.sendMessage("스폰으로 이동했습니다.")
-            }
+
         }
         return false;
     }

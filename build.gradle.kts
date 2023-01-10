@@ -30,7 +30,7 @@ dependencies {
 }
 
 
-/** BUILD SETTINGS */
+/** BUILD DESTINATION DIRECTORY */
 buildscript {
     repositories {
         gradlePluginPortal()
@@ -58,4 +58,19 @@ tasks.withType<Jar> {
 
 application {
     mainClass.set(projectMainClass)
+}
+
+
+/** BUILD SECTION */
+tasks.withType<com.github.jengelman.gradle.plugins.shadow.tasks.ShadowJar> {
+    dependsOn(tasks.processResources)
+    archiveFileName.set("${rootProject.name}.jar")
+
+    doLast {
+        copy {
+            val sep = File.separator
+            from("${buildDir.absolutePath}${sep}libs$sep${project.name}.jar")
+            into("C:\\Users\\Yangd\\대영\\마인크래프트\\서버\\마인크래프트\\개발용\\1.19.2\\plugins")
+        }
+    }
 }

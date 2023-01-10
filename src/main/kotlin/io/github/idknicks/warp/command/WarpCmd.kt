@@ -1,5 +1,6 @@
 package io.github.idknicks.warp.command
 
+import io.github.idknicks.warp.Plugin.Companion.prefix
 import io.github.idknicks.warp.data.WarpData
 import org.bukkit.Bukkit
 import org.bukkit.command.Command
@@ -43,7 +44,7 @@ class WarpCmd : CommandExecutor {
 
                     var name: String = args[1]
                     warpData.getWarpLocation(name)?.let { player.teleport(it) }
-                    player.sendMessage("워프 $name 으로 이동했습니다.")
+                    player.sendMessage("$prefix 워프 $name 으로 이동했습니다.")
                 }
 
                 "강제이동" -> {
