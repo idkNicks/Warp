@@ -34,9 +34,6 @@ class Plugin : JavaPlugin() {
         instance = this
         Plugin.config = Config("config", this)
         Plugin.config!!.loadDefaultConfig()
-        prefix = Config("config", this).getString("prefix")
-
-        /** BSTATS */
-        Metrics(this, 12345)
+        prefix = Config("config", this).config.getString("prefix")
     }
 }

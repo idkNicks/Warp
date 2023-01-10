@@ -1,7 +1,10 @@
 package io.github.idknicks.warp.command
 
 import io.github.idknicks.warp.Plugin
+import io.github.idknicks.warp.Plugin.Companion.config
+import io.github.idknicks.warp.Plugin.Companion.prefix
 import io.github.idknicks.warp.data.WarpData
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -20,17 +23,17 @@ class SpawnCmd: CommandExecutor {
             if(args.isEmpty()) {
 
                 if(!player.hasPermission("warp.spawn")) {
-                    player.sendMessage("§c당신은 이 명령어를 사용할 권한이 없습니다.")
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
                     return true
                 }
 
                 if(!warpData.isSpawnExist()) {
-                    player.sendMessage("스폰이 설정되어있지 않습니다!")
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.notSetSpawn"))))
                     return true
                 }
 
                 warpData.getSpawnLocation()?.let { player.teleport(it) }
-                sender.sendMessage("스폰으로 이동했습니다.")
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.spawn.teleport"))))
 
         }
         return false;
@@ -48,12 +51,12 @@ class SetSpawnCmd : CommandExecutor {
             if(args.isEmpty()) {
 
                 if(!player.hasPermission("warp.setspawn")) {
-                    player.sendMessage("${Plugin.prefix}".plus(Plugin.config!!.getString("errMessages.noPermission")))
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${Plugin.prefix}".plus(Plugin.config!!.getString("errMessages.noPermission"))))
                     return true
                 }
 
                 warpData.setSpawnLocation()
-                player.sendMessage("스폰이 설정되었습니다.")
+                player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.spawn.set"))))
             }
         }
         return false;

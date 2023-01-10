@@ -1,5 +1,7 @@
 package io.github.idknicks.warp.command
 
+import com.github.nicklib.data.Config
+import com.github.nicklib.utils.Translate
 import io.github.idknicks.warp.Plugin.Companion.config
 import io.github.idknicks.warp.Plugin.Companion.prefix
 import io.github.idknicks.warp.data.WarpData
@@ -9,6 +11,7 @@ import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
 import org.bukkit.entity.Player
+import io.github.idknicks.warp.Plugin.Companion.instance
 
 class WarpCmd : CommandExecutor {
 
@@ -21,58 +24,60 @@ class WarpCmd : CommandExecutor {
         if (sender is Player) {
 
             if (args.isEmpty()) {
-                player.sendMessage("테스트")
+                for(list: String in Translate.color(config!!.getStringList("messages.warp.main"))) {
+                    player.sendMessage(list)
+                }
                 return true;
             }
 
             when (args[0]) {
 
-                "이동", "teleport" -> {
+                "이동", "teleport", "tp" -> {
 
                     if (!player.hasPermission("warp.teleport")) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
                         return true
                     }
 
                     if (args.size == 1) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingWarp")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noTypingWarp"))))
                         return true;
                     }
 
                     if (!warpData.isWarpExist(args[1])) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.notExistWarp")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.notExistWarp"))))
                         return true
                     }
 
                     var name: String = args[1]
                     warpData.getWarpLocation(name)?.let { player.teleport(it) }
-                    player.sendMessage("$prefix".plus(config!!.getString("messages.warp.teleport").replace("{name}", name)))
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "$prefix".plus(config!!.getString("messages.warp.teleport").replace("{name}", name))))
                 }
 
-                "강제이동" -> {
+                "강제이동", "forceteleport", "forcedteleport" -> {
 
                     if (!player.hasPermission("warp.forcedteleport")) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
                         return true
                     }
 
                     if (args.size == 1) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingPlayer")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noTypingPlayer"))))
                         return true;
                     }
 
                     if(args.size == 2) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingWarp")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noTypingWarp"))))
                         return true;
                     }
 
                     if (!warpData.isWarpExist(args[2])) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.notExistWarp")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.notExistWarp"))))
                         return true
                     }
 
                     if(Bukkit.getPlayer(args[1]) == null) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.targetIsOffline")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.targetIsOffline"))))
                         return true
                     }
 
@@ -80,8 +85,7 @@ class WarpCmd : CommandExecutor {
                     var name: String = args[2]
 
                     warpData.getWarpLocation(name)?.let { target.teleport(it) }
-                    player.sendMessage("워프 $name 으로 ${target.name} 님을 이동했습니다.")
-                    player.sendMessage("${prefix}".plus(config!!.getString("messages.warp.forcedTeleport")
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.warp.forcedTeleport"))
                     .replace("{name}", name)
                     .replace("{target}", target.name)))
                 }
@@ -90,24 +94,24 @@ class WarpCmd : CommandExecutor {
                 "생성", "create" -> {
 
                     if (!player.hasPermission("warp.create")) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
                         return true;
                     }
 
                     if (args.size == 1) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingWarp")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noTypingWarp"))))
                         return true;
                     }
 
                     if (warpData.isWarpExist(args[1])) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.alreadyWarp")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.alreadyWarp"))))
                         return true;
                     }
 
                     var name: String = args[1]
                     warpData.createWarp(name)
-                    player.sendMessage("${prefix}".plus(config!!.getString("messages.warp.create")
-                        .replace("{name}", name)))
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.warp.create")
+                        .replace("{name}", name))))
                     return true;
                 }
 
@@ -116,42 +120,57 @@ class WarpCmd : CommandExecutor {
                     var name: String = args[1]
 
                     if (!player.hasPermission("warp.delete")) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
                         return true;
                     }
 
                     if (args.size == 1) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingWarp")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noTypingWarp"))))
                         return true;
                     }
 
                     if (!warpData.isWarpExist(name)) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.notExistWarp")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.notExistWarp"))))
                         return true;
                     }
 
                     warpData.deleteWarp(name)
-                    player.sendMessage("${prefix}".plus(config!!.getString("messages.warp.delete")
-                        .replace("{name}", name)))
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.warp.delete")
+                        .replace("{name}", name))))
                     return true;
 
                 }
 
-                "목록" -> {
+                "목록", "list" -> {
 
                     if (!player.hasPermission("warp.list")) {
-                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
                         return true;
                     }
 
-                    var list: List<String> = warpData.listWarp()
-                    player.sendMessage("워프 목록: ${list}")
-                    return true;
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus("§f워프 목록")))
 
+                    for(list: String in warpData.listWarp()) {
+                        player.sendMessage("§6> §7${list}")
+                    }
+                    return true;
+                }
+
+
+                "리로드", "reload" -> {
+
+                    if(!player.hasPermission("warp.reload")) {
+                        player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.noPermission"))))
+                        return true;
+                    }
+
+                    config!!.reloadConfig()
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("messages.warp.reloadConfig"))))
+                    return true;
                 }
 
                 else -> {
-                    player.sendMessage("${prefix}".plus(config!!.getString("errMessages.notExistCommand")))
+                    player.sendMessage(ChatColor.translateAlternateColorCodes('&', "${prefix}".plus(config!!.getString("errMessages.notExistCommand"))))
                 }
             }
         }

@@ -13,7 +13,7 @@ class WarpTabComplete : TabCompleter {
         var list: MutableList<String> = mutableListOf()
 
         if (args.size == 1) {
-            StringUtil.copyPartialMatches(args[0], listOf("이동", "강제이동", "생성", "제거", "목록"), list)
+            StringUtil.copyPartialMatches(args[0], listOf("이동", "강제이동", "생성", "제거", "목록", "리로드"), list)
         }
 
         else if(args.size == 2) {

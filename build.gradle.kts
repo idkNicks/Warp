@@ -18,7 +18,7 @@ repositories {
 dependencies {
 
     /** CORE */
-    compileOnly("com.github:nicklib:1.4.8")
+    compileOnly("com.github:nicklib:1.5.0")
 
     /** BUKKIT API */
     compileOnly("org.bukkit.spigotmc:spigot-api:1.19.2-R0.1")
