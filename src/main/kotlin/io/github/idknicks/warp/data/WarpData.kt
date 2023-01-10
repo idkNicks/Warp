@@ -1,7 +1,7 @@
 package io.github.idknicks.warp.data
 
 import com.github.nicklib.data.Config
-import io.github.idknicks.warp.Plugin.Companion.plugin
+import io.github.idknicks.warp.Plugin.Companion.instance
 import org.bukkit.Location
 import org.bukkit.entity.Player
 
@@ -17,7 +17,7 @@ class WarpData(player: Player) {
      * @param name 생성할 워프의 이름
      */
     fun createWarp(name: String) {
-        Config("warp/" + name, plugin).saveLocation(name, player.location)
+        Config("warp/" + name, instance).saveLocation(name, player.location)
     }
 
     /**
@@ -25,7 +25,7 @@ class WarpData(player: Player) {
      * @param name 제거할 워프의 이름
      */
     fun deleteWarp(name: String) {
-        Config("warp/" + name, plugin).deleteFile()
+        Config("warp/" + name, instance).deleteFile()
     }
 
     /**
@@ -33,7 +33,7 @@ class WarpData(player: Player) {
      * @return 존재하는 워프의 이름
      */
     fun listWarp(): List<String> {
-        return Config("warp/", plugin).fileListName()
+        return Config("warp/", instance).fileListName()
     }
 
     /**
@@ -41,21 +41,21 @@ class WarpData(player: Player) {
      * @param name 워프의 이름
      */
     fun getWarpLocation(name: String): Location? {
-        return Config("warp/" + name, plugin).getLocation(name)
+        return Config("warp/" + name, instance).getLocation(name)
     }
 
     /**
      * 스폰을 설정합니다.
      */
     fun setSpawnLocation() {
-        Config("spawn", plugin).saveLocation("spawn", player.location)
+        Config("spawn", instance).saveLocation("spawn", player.location)
     }
 
     /**
      * 스폰 위치를 가져옵니다.
      */
     fun getSpawnLocation(): Location? {
-        return Config("spawn", plugin).getLocation("spawn")
+        return Config("spawn", instance).getLocation("spawn")
     }
 
     /**
@@ -63,7 +63,7 @@ class WarpData(player: Player) {
      * @return 스폰이 존재하면 true, 아니면 false
      */
     fun isSpawnExist(): Boolean {
-        return Config("spawn", plugin).isFileExist
+        return Config("spawn", instance).isFileExist
     }
 
     /**
@@ -71,6 +71,6 @@ class WarpData(player: Player) {
      * @param name 확인할 워프의 이름
      */
     fun isWarpExist(name: String): Boolean {
-        return Config("warp/" + name, plugin).isFileExist
+        return Config("warp/" + name, instance).isFileExist
     }
 }

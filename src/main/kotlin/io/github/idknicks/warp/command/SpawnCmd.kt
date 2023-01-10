@@ -1,5 +1,6 @@
 package io.github.idknicks.warp.command
 
+import io.github.idknicks.warp.Plugin
 import io.github.idknicks.warp.data.WarpData
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
@@ -47,7 +48,7 @@ class SetSpawnCmd : CommandExecutor {
             if(args.isEmpty()) {
 
                 if(!player.hasPermission("warp.setspawn")) {
-                    player.sendMessage("§c당신은 이 명령어를 사용할 권한이 없습니다.")
+                    player.sendMessage("${Plugin.prefix}".plus(Plugin.config!!.getString("errMessages.noPermission")))
                     return true
                 }
 

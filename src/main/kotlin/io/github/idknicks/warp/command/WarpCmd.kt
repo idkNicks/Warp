@@ -1,8 +1,10 @@
 package io.github.idknicks.warp.command
 
+import io.github.idknicks.warp.Plugin.Companion.config
 import io.github.idknicks.warp.Plugin.Companion.prefix
 import io.github.idknicks.warp.data.WarpData
 import org.bukkit.Bukkit
+import org.bukkit.ChatColor
 import org.bukkit.command.Command
 import org.bukkit.command.CommandExecutor
 import org.bukkit.command.CommandSender
@@ -28,49 +30,49 @@ class WarpCmd : CommandExecutor {
                 "이동", "teleport" -> {
 
                     if (!player.hasPermission("warp.teleport")) {
-                        player.sendMessage("§c당신은 이 명령어를 사용할 §c당신은 이 명령어를 사용할 권한이 없습니다.")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
                         return true
                     }
 
                     if (args.size == 1) {
-                        player.sendMessage("이동하실 워프 이름을 입력해주세요!")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingWarp")))
                         return true;
                     }
 
                     if (!warpData.isWarpExist(args[1])) {
-                        player.sendMessage("워프가 존재하지 않습니다.")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.notExistWarp")))
                         return true
                     }
 
                     var name: String = args[1]
                     warpData.getWarpLocation(name)?.let { player.teleport(it) }
-                    player.sendMessage("$prefix 워프 $name 으로 이동했습니다.")
+                    player.sendMessage("$prefix".plus(config!!.getString("messages.warp.teleport").replace("{name}", name)))
                 }
 
                 "강제이동" -> {
 
                     if (!player.hasPermission("warp.forcedteleport")) {
-                        player.sendMessage("§c당신은 이 명령어를 사용할 §c당신은 이 명령어를 사용할 권한이 없습니다.")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
                         return true
                     }
 
                     if (args.size == 1) {
-                        player.sendMessage("강제 이동시킬 플레이어의 닉네임을 입력해주세요!")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingPlayer")))
                         return true;
                     }
 
                     if(args.size == 2) {
-                        player.sendMessage("강제 이동시킬 워프 이름을 입력해주세요!")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingWarp")))
                         return true;
                     }
 
                     if (!warpData.isWarpExist(args[2])) {
-                        player.sendMessage("워프가 존재하지 않습니다.")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.notExistWarp")))
                         return true
                     }
 
                     if(Bukkit.getPlayer(args[1]) == null) {
-                        player.sendMessage("플레이어가 온라인이 아닙니다.")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.targetIsOffline")))
                         return true
                     }
 
@@ -79,29 +81,33 @@ class WarpCmd : CommandExecutor {
 
                     warpData.getWarpLocation(name)?.let { target.teleport(it) }
                     player.sendMessage("워프 $name 으로 ${target.name} 님을 이동했습니다.")
+                    player.sendMessage("${prefix}".plus(config!!.getString("messages.warp.forcedTeleport")
+                    .replace("{name}", name)
+                    .replace("{target}", target.name)))
                 }
 
 
                 "생성", "create" -> {
 
                     if (!player.hasPermission("warp.create")) {
-                        player.sendMessage("§c당신은 이 명령어를 사용할 권한이 없습니다.")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
                         return true;
                     }
 
                     if (args.size == 1) {
-                        player.sendMessage("생성할 워프 이름을 입력해주세요!")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingWarp")))
                         return true;
                     }
 
                     if (warpData.isWarpExist(args[1])) {
-                        player.sendMessage("이미 존재하는 워프입니다!")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.alreadyWarp")))
                         return true;
                     }
 
                     var name: String = args[1]
                     warpData.createWarp(name)
-                    player.sendMessage("${name}의 워프를 생성하였습니다!")
+                    player.sendMessage("${prefix}".plus(config!!.getString("messages.warp.create")
+                        .replace("{name}", name)))
                     return true;
                 }
 
@@ -110,22 +116,23 @@ class WarpCmd : CommandExecutor {
                     var name: String = args[1]
 
                     if (!player.hasPermission("warp.delete")) {
-                        player.sendMessage("§c당신은 이 명령어를 사용할 권한이 없습니다.")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
                         return true;
                     }
 
                     if (args.size == 1) {
-                        player.sendMessage("제거할 워프 이름을 입력해주세요!")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noTypingWarp")))
                         return true;
                     }
 
                     if (!warpData.isWarpExist(name)) {
-                        player.sendMessage("존재하지 않는 워프입니다!")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.notExistWarp")))
                         return true;
                     }
 
                     warpData.deleteWarp(name)
-                    player.sendMessage("${name}의 워프를 제거하였습니다!")
+                    player.sendMessage("${prefix}".plus(config!!.getString("messages.warp.delete")
+                        .replace("{name}", name)))
                     return true;
 
                 }
@@ -133,7 +140,7 @@ class WarpCmd : CommandExecutor {
                 "목록" -> {
 
                     if (!player.hasPermission("warp.list")) {
-                        player.sendMessage("§c당신은 이 명령어를 사용할 권한이 없습니다.")
+                        player.sendMessage("${prefix}".plus(config!!.getString("errMessages.noPermission")))
                         return true;
                     }
 
@@ -144,7 +151,7 @@ class WarpCmd : CommandExecutor {
                 }
 
                 else -> {
-                    player.sendMessage("잘못된 명령어 입니다!")
+                    player.sendMessage("${prefix}".plus(config!!.getString("errMessages.notExistCommand")))
                 }
             }
         }

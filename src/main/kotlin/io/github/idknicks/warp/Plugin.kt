@@ -6,14 +6,15 @@ import io.github.idknicks.warp.command.SetSpawnCmd
 import io.github.idknicks.warp.command.SpawnCmd
 import io.github.idknicks.warp.command.WarpCmd
 import io.github.idknicks.warp.command.WarpTabComplete
+import org.bukkit.ChatColor
 import org.bukkit.plugin.java.JavaPlugin
 
-class Plugin() : JavaPlugin() {
+class Plugin : JavaPlugin() {
 
     companion object {
-        var plugin: JavaPlugin? = null
+        var instance: Plugin? = null
         var config: Config? = null
-        var prefix: String = Config("config", plugin).getString("prefix")!!
+        var prefix: String? = null
     }
 
     override fun onEnable() {
@@ -30,8 +31,10 @@ class Plugin() : JavaPlugin() {
         getCommand("setspawn")?.setExecutor(SetSpawnCmd())
 
         /** CONFIG */
-        plugin = this
-        Plugin.config?.loadDefaultConfig()
+        instance = this
+        Plugin.config = Config("config", this)
+        Plugin.config!!.loadDefaultConfig()
+        prefix = Config("config", this).getString("prefix")
 
         /** BSTATS */
         Metrics(this, 12345)
