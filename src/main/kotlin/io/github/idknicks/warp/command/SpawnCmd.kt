@@ -19,36 +19,36 @@ class SpawnCmd : CommandExecutor {
 
         if (sender !is Player) return true
 
-            if (args.isEmpty()) {
+        if (args.isEmpty()) {
 
-                if (!player.hasPermission("warp.spawn")) {
-                    player.sendMessage(
-                        ChatColor.translateAlternateColorCodes(
-                            '&',
-                            "${prefix}".plus(config!!.getString("errMessages.noPermission"))
-                        )
-                    )
-                    return true
-                }
-
-                if (!warpData.isSpawnExist()) {
-                    player.sendMessage(
-                        ChatColor.translateAlternateColorCodes(
-                            '&',
-                            "${prefix}".plus(config!!.getString("errMessages.notSetSpawn"))
-                        )
-                    )
-                    return true
-                }
-
-                warpData.getSpawnLocation()?.let { player.teleport(it) }
+            if (!player.hasPermission("warp.spawn")) {
                 player.sendMessage(
                     ChatColor.translateAlternateColorCodes(
                         '&',
-                        "${prefix}".plus(config!!.getString("messages.spawn.teleport"))
+                        "${prefix}".plus(config!!.getString("errMessages.noPermission"))
                     )
                 )
+                return true
             }
+
+            if (!warpData.isSpawnExist()) {
+                player.sendMessage(
+                    ChatColor.translateAlternateColorCodes(
+                        '&',
+                        "${prefix}".plus(config!!.getString("errMessages.notSetSpawn"))
+                    )
+                )
+                return true
+            }
+
+            warpData.getSpawnLocation()?.let { player.teleport(it) }
+            player.sendMessage(
+                ChatColor.translateAlternateColorCodes(
+                    '&',
+                    "${prefix}".plus(config!!.getString("messages.spawn.teleport"))
+                )
+            )
+        }
         return false;
     }
 }
@@ -61,26 +61,26 @@ class SetSpawnCmd : CommandExecutor {
 
         if (!(sender is Player)) return true
 
-            if (args.isEmpty()) {
+        if (args.isEmpty()) {
 
-                if (!player.hasPermission("warp.setspawn")) {
-                    player.sendMessage(
-                        ChatColor.translateAlternateColorCodes(
-                            '&',
-                            "${Plugin.prefix}".plus(Plugin.config!!.getString("errMessages.noPermission"))
-                        )
-                    )
-                    return true
-                }
-
-                warpData.setSpawnLocation()
+            if (!player.hasPermission("warp.setspawn")) {
                 player.sendMessage(
                     ChatColor.translateAlternateColorCodes(
                         '&',
-                        "${prefix}".plus(config!!.getString("messages.spawn.set"))
+                        "${Plugin.prefix}".plus(Plugin.config!!.getString("errMessages.noPermission"))
                     )
                 )
+                return true
             }
+
+            warpData.setSpawnLocation()
+            player.sendMessage(
+                ChatColor.translateAlternateColorCodes(
+                    '&',
+                    "${prefix}".plus(config!!.getString("messages.spawn.set"))
+                )
+            )
+        }
         return false;
     }
 }

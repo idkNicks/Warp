@@ -1,4 +1,4 @@
-package io.github.idknicks.warp.command
+package io.github.idknicks.warp.command.tabcomplete
 
 import com.github.nicklib.data.Config
 import io.github.idknicks.warp.Plugin.Companion.instance

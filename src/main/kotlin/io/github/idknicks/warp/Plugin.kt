@@ -4,7 +4,8 @@ import com.github.nicklib.data.Config
 import io.github.idknicks.warp.command.SetSpawnCmd
 import io.github.idknicks.warp.command.SpawnCmd
 import io.github.idknicks.warp.command.WarpCmd
-import io.github.idknicks.warp.command.WarpTabComplete
+import io.github.idknicks.warp.command.tabcomplete.SpawnTabComplete
+import io.github.idknicks.warp.command.tabcomplete.WarpTabComplete
 import org.bukkit.plugin.java.JavaPlugin
 
 class Plugin : JavaPlugin() {
@@ -26,7 +27,9 @@ class Plugin : JavaPlugin() {
         getCommand("warp")?.setExecutor(WarpCmd())
         getCommand("warp")?.tabCompleter = WarpTabComplete()
         getCommand("spawn")?.setExecutor(SpawnCmd())
+        getCommand("setspawn")?.tabCompleter = SpawnTabComplete()
         getCommand("setspawn")?.setExecutor(SetSpawnCmd())
+        getCommand("setspawn")?.tabCompleter = SpawnTabComplete()
 
         /** CONFIG */
         instance = this
