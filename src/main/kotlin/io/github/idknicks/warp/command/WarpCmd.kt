@@ -15,7 +15,6 @@ import io.github.idknicks.warp.Plugin.Companion.instance
 
 class WarpCmd : CommandExecutor {
 
-
     override fun onCommand(sender: CommandSender, cmd: Command, label: String, args: Array<out String>): Boolean {
 
         var player: Player = sender as Player
