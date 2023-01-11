@@ -27,7 +27,7 @@ class Plugin : JavaPlugin() {
         getCommand("warp")?.setExecutor(WarpCmd())
         getCommand("warp")?.tabCompleter = WarpTabComplete()
         getCommand("spawn")?.setExecutor(SpawnCmd())
-        getCommand("setspawn")?.tabCompleter = SpawnTabComplete()
+        getCommand("spawn")?.tabCompleter = SpawnTabComplete()
         getCommand("setspawn")?.setExecutor(SetSpawnCmd())
         getCommand("setspawn")?.tabCompleter = SpawnTabComplete()
 
